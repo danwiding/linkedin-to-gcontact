@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LinkedIn to Google Contacts",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Link your LinkedIn contacts to Google Contacts",
   "permissions": [
     "sidePanel"
@@ -9,11 +9,7 @@
   "action": {
     "default_title": "Open LinkedIn to Google Contacts"
   },
-  "side_panel": {
-    "default_path": "sidepanel.html"
-  },
   "background": {
     "service_worker": "background.js"
   }
 }
-
