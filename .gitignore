@@ -34,7 +34,6 @@ pnpm-lock.yaml
 # Cursor
 .cursor/
 .cursorignore
-.cursorrules
 
 # Logs
 logs/

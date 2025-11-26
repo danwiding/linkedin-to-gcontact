@@ -1,0 +1,44 @@
+# Git Commit Message Rules
+
+Always generate Git commit messages that include:
+
+- A concise subject line following Conventional Commits (e.g., `feat(scope): brief description`).
+
+- A detailed body explaining:
+  - **What** changes were made
+  - **Where** those changes can be seen by users (if at all)
+  - **Why** they were made
+  - **How** they address the problem or add the feature
+
+- Use bullet points or numbered lists within the body for clarity when describing multiple changes.
+
+- Mention any related issues or tasks in the footer (e.g., `Fixes #123`, `Refs #456`).
+
+- Ensure the message is comprehensive and provides sufficient context for future reference.
+
+## Example Commit Message Format
+
+```
+feat(sidepanel): add user authentication flow
+
+What:
+- Added login form component with email/password fields
+- Implemented OAuth2 authentication with Google
+- Added session persistence using chrome.storage.local
+
+Where:
+- Login form appears in the side panel when user is not authenticated
+- Success redirects to the main contacts view
+
+Why:
+- Users need to authenticate to access their Google Contacts
+- Required for the LinkedIn-to-Google contact linking feature
+
+How:
+- Uses Chrome Identity API for OAuth2 flow
+- Stores refresh token securely in chrome.storage.local
+- Validates session on each side panel open
+
+Refs #42
+```
+
