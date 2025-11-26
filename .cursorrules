@@ -2,7 +2,7 @@
 
 Before every commit, ask the user about version updates:
 
-1. Ask: "Would you like to update the Chrome extension version number?"
+1. Ask: "Would you like to update the Chrome Extension version number?"
 2. If yes, ask: "Is this a **major**, **minor**, or **patch** version change?"
 3. Update the version in `manifest.json` following Semantic Versioning (semver):
    - **Major** (X.0.0): Breaking changes or significant new functionality
