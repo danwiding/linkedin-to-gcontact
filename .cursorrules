@@ -1,3 +1,23 @@
+# Chrome Extension Version Management
+
+Before every commit, ask the user about version updates:
+
+1. Ask: "Would you like to update the Chrome extension version number?"
+2. If yes, ask: "Is this a **major**, **minor**, or **patch** version change?"
+3. Update the version in `manifest.json` following Semantic Versioning (semver):
+   - **Major** (X.0.0): Breaking changes or significant new functionality
+   - **Minor** (x.Y.0): New features that are backward-compatible
+   - **Patch** (x.y.Z): Bug fixes and minor improvements
+4. Include the version bump in the commit
+
+Example flow:
+- Current version: `0.1.0`
+- User selects "patch" → New version: `0.1.1`
+- User selects "minor" → New version: `0.2.0`
+- User selects "major" → New version: `1.0.0`
+
+---
+
 # Git Commit Message Rules
 
 Always generate Git commit messages that include:
@@ -41,4 +61,3 @@ How:
 
 Refs #42
 ```
-
