@@ -1,0 +1,17 @@
+{
+  "name": "linkedin-to-gcontact",
+  "version": "0.2.0",
+  "description": "Chrome extension to link LinkedIn contacts to Google Contacts",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.21"
+  },
+  "type": "module"
+}
+
+
