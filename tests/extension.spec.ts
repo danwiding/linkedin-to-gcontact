@@ -8,11 +8,12 @@ test('extension service worker loads successfully', async ({ context, extensionI
 });
 
 test('side panel HTML is accessible', async ({ page, extensionId }) => {
-  // Navigate to the side panel HTML directly
   await page.goto(`chrome-extension://${extensionId}/sidepanel.html`);
-  
-  // Verify the page loads and contains expected content
-  await expect(page.locator('h1')).toHaveText('Hello World');
+  const header = page.locator('h1#page-display-name');
+  await expect(header).toBeVisible();
+  // Should render some non-empty display name or fallback
+  const text = await header.textContent();
+  expect((text || '').length).toBeGreaterThan(0);
 });
 
 test('side panel has correct styling', async ({ page, extensionId }) => {

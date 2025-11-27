@@ -31,12 +31,34 @@
       font-weight: 600;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
+
+    .info {
+      margin-top: 1rem;
+      background: rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: left;
+    }
+    .info-row {
+      margin: 0.25rem 0;
+    }
+    .label {
+      opacity: 0.85;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Hello World</h1>
+    <h1 id="page-display-name">(loading)</h1>
+    <div class="info">
+      <div class="info-row"><span class="label">Title:</span> <span id="page-title">(loading)</span></div>
+      <div class="info-row"><span class="label">Hostname:</span> <span id="page-host">(loading)</span></div>
+      <div class="info-row"><span class="label">Author:</span> <span id="page-author">(loading)</span></div>
+      <div class="info-row"><span class="label">Site Name:</span> <span id="page-site_name">(loading)</span></div>
+    </div>
   </div>
+  <script src="sidepanel.js"></script>
 </body>
 </html>
 

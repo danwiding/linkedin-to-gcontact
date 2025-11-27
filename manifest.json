@@ -4,12 +4,24 @@
   "version": "0.2.0",
   "description": "Link your LinkedIn contacts to Google Contacts",
   "permissions": [
-    "sidePanel"
+    "sidePanel",
+    "tabs"
   ],
   "action": {
     "default_title": "Open LinkedIn to Google Contacts"
   },
   "background": {
     "service_worker": "background.js"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
 }
