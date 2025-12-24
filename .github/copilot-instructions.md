@@ -61,8 +61,93 @@ These rules help AI coding agents work productively in this Chrome Extension pro
 - Keep new Chrome API usage behind clear functions for testability.
 - Update `README.md` with minimal usage notes when adding user-facing features.
 
+### Extension Version Management & Release Workflow
+
+**Feature Branch Workflow:**
+1. **Create feature branch:** Start each issue on a dedicated feature branch:
+   ```
+   git checkout -b feature/issue-<number>-short-description
+   ```
+   Example: `feature/issue-1-refresh-sidebar-navigation`
+
+2. **Develop and test locally:**
+   - Make code changes for the issue
+   - Run `npm test` frequently to ensure tests pass
+   - Make commits using the Conventional Commits format (see Git Commit Conventions below)
+
+3. **Push and open PR:**
+   - Push branch: `git push origin feature/issue-<number>-short-description`
+   - Open a pull request on GitHub linking to the issue
+   - GitHub Actions will automatically run `npm test` on the PR
+
+4. **Version bump (if needed):**
+   - Before merging, ask user: "Would you like to update the Chrome Extension version number?"
+   - If yes, ask: "Is this a **major**, **minor**, or **patch** version change?"
+   - Update `manifest.json` following Semantic Versioning:
+     - **Major** (X.0.0): Breaking changes or significant new functionality
+     - **Minor** (x.Y.0): New features that are backward-compatible
+     - **Patch** (x.y.Z): Bug fixes and minor improvements
+   - Commit version bump with message: `chore: bump version to X.Y.Z`
+
+5. **Verify CI and merge:**
+   - Wait for GitHub Actions to complete on the PR
+   - Ensure all checks pass before merging
+   - If CI fails, fix issues in the feature branch and push again
+   - Merge to `main` when all checks pass
+
 ### Quick Commands
 - Install: `npm install`
-- Tests: `npm test`
-- Headed tests: `npm run test:headed`
-- Debug tests: `npm run test:debug`
+- Tests: `npm test` (runs both Jest and Playwright)
+- Jest only: `npm run test:jest`
+- Playwright only: `npm run test:playwright`
+- Headed Playwright: `npm run test:playwright:headed`
+- Debug Playwright: `npm run test:playwright:debug`
+- Create feature branch: `git checkout -b feature/issue-<number>-description`
+
+### Git Commit Conventions
+Before committing:
+1. **Version bump:** Ask user if version should update (major/minor/patch in `manifest.json`).
+2. **Commit message format:** Use Conventional Commits with detailed body:
+   - Subject: `<type>(<scope>): <brief description>`
+   - Types: `feat`, `fix`, `test`, `docs`, `refactor`, `chore`
+   - Example subject: `feat(sidebar): add LinkedIn profile detection`
+   - **Important:** Avoid double quotes in commit messages; use single quotes or backticks instead
+3. **Commit body structure:**
+   ```
+   What:
+   - List of changes made
+   
+   Where:
+   - Where users see the impact (e.g., Login form in side panel)
+   
+   Why:
+   - Rationale for the changes
+   
+   How:
+   - Implementation details or approach
+   
+   Refs #123 (link to related issue)
+   ```
+
+Example commit:
+```
+feat(sidebar): add LinkedIn profile detection
+
+What:
+- Added isLinkedInProfile() function to content.js
+- Listen for chrome.tabs.onUpdated to refresh sidebar on navigation
+- Extract first/last name from LinkedIn profile DOM
+
+Where:
+- Side panel updates automatically when user navigates to/from LinkedIn profiles
+
+Why:
+- Required for detecting LinkedIn profiles before matching Google Contacts
+
+How:
+- URL heuristic: *://*.linkedin.com/in/*
+- DOM marker: profile header container presence
+- Message flow: content.js → sidepanel.js via chrome.runtime.sendMessage
+
+Refs #2, #3
+```
