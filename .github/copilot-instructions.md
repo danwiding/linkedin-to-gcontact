@@ -95,6 +95,100 @@ These rules help AI coding agents work productively in this Chrome Extension pro
    - If CI fails, fix issues in the feature branch and push again
    - Merge to `main` when all checks pass
 
+### Test-Driven Development (TDD) Workflow
+
+**CRITICAL: Always write tests BEFORE implementing features or fixes.**
+
+**For all issues (features and bugs):**
+1. **Red - Write failing test first:**
+   - Before writing any implementation code, create a test that defines the expected behavior
+   - For new features: Write tests that specify how the feature should work
+   - For bugs: Write tests that reproduce the error
+   - Run the test to verify it fails (proves the feature doesn't exist or bug is present)
+   - **Commit the failing test as the first commit:**
+     ```
+     test: add tests for <feature/fix description>
+     
+     What:
+     - Added test case for <expected behavior>
+     - Test currently fails as feature/fix not yet implemented
+     
+     Where:
+     - <test file name>
+     
+     Why:
+     - Defines acceptance criteria for <feature/fix>
+     - Will verify implementation and prevent regression
+     
+     How:
+     - <describe test approach and what it validates>
+     
+     Refs #<issue-number>
+     ```
+
+2. **Green - Make the test pass:**
+   - Implement the minimal code needed to make the test pass
+   - Run `npm test` frequently to check progress
+   - Keep iterating until all tests pass
+   - **Commit the implementation:**
+     ```
+     feat|fix: <description>
+     
+     What:
+     - <changes made>
+     
+     Where:
+     - <user-facing impact>
+     
+     Why:
+     - <reason for implementation/fix>
+     
+     How:
+     - <implementation approach>
+     
+     Refs #<issue-number>
+     ```
+
+3. **Refactor - Improve code quality:**
+   - If needed, refactor the implementation while keeping tests green
+   - Improve structure, readability, or performance
+   - Run `npm test` after each refactoring to ensure tests still pass
+   - **Commit refactoring separately:**
+     ```
+     refactor: <description>
+     
+     What:
+     - <refactoring changes>
+     
+     Why:
+     - <improvements made>
+     
+     How:
+     - <refactoring approach>
+     
+     Refs #<issue-number>
+     ```
+
+**Benefits:**
+- Clear commit history: failing test → passing implementation → refactored code
+- Tests serve as executable documentation of requirements
+- Prevents over-engineering (only write code needed to pass tests)
+- Ensures all code is tested (100% coverage of new features)
+- Catches regressions immediately
+- Forces clear thinking about requirements before coding
+
+**Examples:**
+
+*New feature (Issue #2: Detect LinkedIn profiles):*
+1. First commit: `test: add tests for LinkedIn profile detection` - tests that check URL patterns and DOM markers (FAILS)
+2. Second commit: `feat(content): implement LinkedIn profile detection` - add detection logic (PASSES)
+3. Third commit (optional): `refactor: extract URL pattern matching to helper function` - cleanup (PASSES)
+
+*Bug fix (module import error):*
+1. First commit: `test: reproduce module import error in side panel` - add console error checking to Playwright test (FAILS)
+2. Second commit: `fix: add type module declarations for ES6 imports` - add type="module" to manifest and HTML (PASSES)
+3. Third commit (optional): `refactor: improve error logging in tests` - cleanup (PASSES)
+
 ### Quick Commands
 - Install: `npm install`
 - Tests: `npm test` (runs both Jest and Playwright)

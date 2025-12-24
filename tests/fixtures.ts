@@ -1,9 +1,41 @@
-import { test as base, chromium, type BrowserContext } from '@playwright/test';
+import { test as base, chromium, type BrowserContext, type Page } from '@playwright/test';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+/**
+ * Tracks all console and page errors that occur on a page.
+ * Returns a function to assert no errors were captured.
+ */
+export function trackPageErrors(page: Page) {
+  const errors: string[] = [];
+  
+  page.on('console', msg => {
+    if (msg.type() === 'error') {
+      errors.push(`[console] ${msg.text()}`);
+    }
+  });
+  
+  page.on('pageerror', err => {
+    errors.push(`[pageerror] ${err.message}`);
+  });
+  
+  page.on('unhandledrejection', err => {
+    const message = err instanceof Error ? err.message : String(err);
+    errors.push(`[unhandledrejection] ${message}`);
+  });
+  
+  return {
+    getErrors: () => errors,
+    expectNoErrors: () => {
+      if (errors.length > 0) {
+        throw new Error(`Expected no page errors but got:\n${errors.join('\n')}`);
+      }
+    }
+  };
+}
 
 export const test = base.extend<{
   context: BrowserContext;
