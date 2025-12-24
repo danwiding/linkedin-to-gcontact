@@ -1,4 +1,5 @@
 import { pickDisplayName } from './pickDisplayName.js';
+import { LI2GC_MESSAGE_TYPES } from './messageTypes.js';
 
 async function initSidePanel() {
   let info = { title: '', hostname: '', author: '', site_name: '' };
@@ -13,7 +14,7 @@ async function initSidePanel() {
       } catch {
         info.hostname = '';
       }
-      const fromContent = await chrome.tabs.sendMessage(tab.id, { type: 'GET_PAGE_INFO' }).catch(() => null);
+      const fromContent = await chrome.tabs.sendMessage(tab.id, { type: LI2GC_MESSAGE_TYPES.GET_PAGE_INFO }).catch(() => null);
       if (fromContent) {
         info = { ...info, ...fromContent };
       }
@@ -34,5 +35,12 @@ async function initSidePanel() {
   authorEl.textContent = info.author || '(n/a)';
   siteNameEl.textContent = info.site_name || '(n/a)';
 }
+
+// Listen for REFRESH_PANEL messages from background script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message && message.type === LI2GC_MESSAGE_TYPES.REFRESH_PANEL) {
+    initSidePanel();
+  }
+});
 
 initSidePanel();

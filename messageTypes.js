@@ -1,0 +1,7 @@
+// Shared message types for chrome.runtime communication
+export const LI2GC_MESSAGE_TYPES = {
+  REFRESH_PANEL: 'REFRESH_PANEL',
+  GET_PAGE_INFO: 'GET_PAGE_INFO',
+  IS_LINKEDIN_PROFILE: 'IS_LINKEDIN_PROFILE',
+  GET_LINKEDIN_NAME: 'GET_LINKEDIN_NAME',
+};
