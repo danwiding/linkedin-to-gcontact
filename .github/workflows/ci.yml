@@ -22,11 +22,13 @@ jobs:
     - name: Install dependencies
       run: npm ci
     
-    - name: Run tests
-      run: npm run test:jest
+    - name: Run tests (Jest JSON output)
+      run: |
+        mkdir -p test-results
+        npx jest --ci --json --outputFile=test-results/jest-results.json
     
-    - name: Upload test results
-      if: always()
+    - name: Upload test results (if present)
+      if: ${{ hashFiles('test-results/**') != '' }}
       uses: actions/upload-artifact@v4
       with:
         name: test-results

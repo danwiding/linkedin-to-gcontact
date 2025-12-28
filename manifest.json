@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LinkedIn to Google Contacts",
-  "version": "0.4.0",
+  "version": "0.6.0",
   "description": "Link your LinkedIn contacts to Google Contacts",
   "permissions": [
     "sidePanel",
@@ -22,8 +22,7 @@
       "js": [
         "content.js"
       ],
-      "run_at": "document_idle",
-      "type": "module"
+      "run_at": "document_idle"
     }
   ]
 }
