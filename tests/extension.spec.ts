@@ -139,4 +139,45 @@ test('side panel displays page metadata correctly', async ({ context, page, exte
   await contentPage.close();
 });
 
+test('side panel shows LinkedIn profile status when on a profile page', async ({ context, page, extensionId }) => {
+  const { expectNoErrors } = trackPageErrors(page);
+
+  // Open the side panel first
+  await page.goto(`chrome-extension://${extensionId}/sidepanel.html`);
+
+  // Intercept LinkedIn profile URL and serve a minimal profile-like HTML
+  await context.route('https://www.linkedin.com/in/**', async route => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'text/html',
+      body: `
+        <html>
+          <head><title>Playwright Profile</title></head>
+          <body>
+            <main>
+              <section class="pv-top-card">Header</section>
+            </main>
+          </body>
+        </html>
+      `,
+    });
+  });
+
+  // Create a tab navigated to a LinkedIn profile URL
+  const profilePage = await context.newPage();
+  await profilePage.goto('https://www.linkedin.com/in/playwright-user');
+  await profilePage.waitForLoadState('load');
+
+  // Bring profile tab to front to ensure it's the active tab
+  await profilePage.bringToFront();
+
+  // Wait for side panel to reflect LinkedIn detection
+  const linkedinRow = page.locator('#page-is_linkedin_profile');
+  await expect(linkedinRow).toHaveText('Yes', { timeout: 3000 });
+
+  expectNoErrors();
+
+  await profilePage.close();
+});
+
 

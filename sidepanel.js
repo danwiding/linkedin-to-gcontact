@@ -28,12 +28,14 @@ async function initSidePanel() {
   const hostEl = document.getElementById('page-host');
   const authorEl = document.getElementById('page-author');
   const siteNameEl = document.getElementById('page-site_name');
+  const linkedinEl = document.getElementById('page-is_linkedin_profile');
 
   displayEl.textContent = pickDisplayName(info);
   titleEl.textContent = info.title || '(unknown)';
   hostEl.textContent = info.hostname || '(unknown)';
   authorEl.textContent = info.author || '(n/a)';
   siteNameEl.textContent = info.site_name || '(n/a)';
+  linkedinEl.textContent = info.is_linkedin_profile ? 'Yes' : 'No';
 }
 
 // Listen for REFRESH_PANEL messages from background script

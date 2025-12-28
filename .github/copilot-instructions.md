@@ -2,6 +2,15 @@
 
 These rules help AI coding agents work productively in this Chrome Extension project.
 
+### Repository & Project Links
+- **Repository:** https://github.com/danwiding/linkedin-to-gcontact
+- **Default Branch:** `main`
+- **Active GitHub Project:** [Project Board](https://github.com/danwiding/linkedin-to-gcontact/projects) — use the repo Projects view. If a user-scoped project is used, link it explicitly here.
+- **Quick CLI:**
+  - View repo: `gh repo view danwiding/linkedin-to-gcontact --web`
+  - List projects: `gh project list --owner danwiding`
+  - Open project: `gh project view 2 --owner danwiding --web`
+
 ### Big Picture
 - **Purpose:** A Manifest v3 Chrome extension that opens a side panel to link LinkedIn contacts with Google Contacts.
 - **Core pieces:**
@@ -100,28 +109,33 @@ These rules help AI coding agents work productively in this Chrome Extension pro
 **CRITICAL: Always write tests BEFORE implementing features or fixes.**
 
 **For all issues (features and bugs):**
-1. **Red - Write failing test first:**
-   - Before writing any implementation code, create a test that defines the expected behavior
+1. **Red - Write failing test first (with stubs):**
+   - Before writing full implementation code, create a test that defines the expected behavior
    - For new features: Write tests that specify how the feature should work
    - For bugs: Write tests that reproduce the error
-   - Run the test to verify it fails (proves the feature doesn't exist or bug is present)
-   - **Commit the failing test as the first commit:**
+   - Create minimal function stubs and exported symbols referenced by the tests so imports resolve (e.g., functions that throw, return placeholders like `false`/`null`, or `NotImplementedError`-style stubs)
+   - Run the test to verify it fails on assertions (not import/compile errors)
+   - **Commit the failing test and stubs together as the first commit:**
      ```
      test: add tests for <feature/fix description>
      
      What:
      - Added test case for <expected behavior>
-     - Test currently fails as feature/fix not yet implemented
+     - Added minimal function stubs so tests compile and import
+     - Tests currently fail on assertions as feature/fix not implemented
      
      Where:
      - <test file name>
+     - <stub file name>
      
      Why:
      - Defines acceptance criteria for <feature/fix>
+     - Keeps TDD loop clean by avoiding import/compile failures
      - Will verify implementation and prevent regression
      
      How:
      - <describe test approach and what it validates>
+     - <describe stub approach (e.g., returns false, throws)>
      
      Refs #<issue-number>
      ```
@@ -180,7 +194,7 @@ These rules help AI coding agents work productively in this Chrome Extension pro
 **Examples:**
 
 *New feature (Issue #2: Detect LinkedIn profiles):*
-1. First commit: `test: add tests for LinkedIn profile detection` - tests that check URL patterns and DOM markers (FAILS)
+1. First commit: `test: add tests for LinkedIn profile detection` - tests that check URL patterns and DOM markers (FAILS) + add `linkedinDetection.js` with `isLinkedInProfile()` stub returning a placeholder (e.g., `false`)
 2. Second commit: `feat(content): implement LinkedIn profile detection` - add detection logic (PASSES)
 3. Third commit (optional): `refactor: extract URL pattern matching to helper function` - cleanup (PASSES)
 
